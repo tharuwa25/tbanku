@@ -21,16 +21,17 @@ export default function ViewAssetsPage() {
         const data = await getAllAssets();
         console.log('Fetched assets:', data);
         setAssets(data);
-      } catch (error) {
-        console.error('Error loading assets:', error);
+      } catch (err) {
+        console.error('Error loading assets:', err);
         setError('Failed to load assets. Please try again later.');
       } finally {
         setLoading(false);
       }
     };
-
+  
     loadAssets();
   }, []);
+  
 
   const filteredIncomes = assets.filter(asset => {
     const assetDate = new Date(asset.date);
