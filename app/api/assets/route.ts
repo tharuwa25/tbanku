@@ -54,23 +54,29 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const newAsset: Omit<Asset, 'id'> = await request.json();
-    const data = readData();
+    const body = await request.json();
 
-    const newId = data.assets.length > 0
-      ? Math.max(...data.assets.map((i) => i.id)) + 1
+    // Basic validation — make this stricter as needed
+    if (typeof body.name !== 'string' || typeof body.value !== 'number') {
+      return NextResponse.json({ error: 'Invalid asset data' }, { status: 400 });
+    }
+
+    const newId = readData().assets.length > 0
+      ? Math.max(...readData().assets.map((i) => i.id)) + 1
       : 1;
 
-    const assetWithId: Asset = { ...newAsset, id: newId };
+    const assetWithId: Asset = { ...body, id: newId };
+    const data = readData();
     data.assets.push(assetWithId);
 
     writeData(data);
     return NextResponse.json(assetWithId);
   } catch (err) {
     console.error('POST Error:', err);
-    return NextResponse.json({ error: 'Failed to add assets' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to add asset' }, { status: 500 });
   }
 }
+
 
 export async function DELETE(request: Request) {
   try {
