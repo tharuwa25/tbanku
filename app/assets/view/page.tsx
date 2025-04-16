@@ -28,24 +28,24 @@ export default function ViewAssetsPage() {
         setLoading(false);
       }
     };
-  
+
     loadAssets();
   }, []);
-  
 
-  const filteredIncomes = assets.filter(asset => {
+  const filteredAssets = assets.filter((asset) => {
     const assetDate = new Date(asset.date);
     const startDate = filters.startDate ? new Date(filters.startDate) : null;
     const endDate = filters.endDate ? new Date(filters.endDate) : null;
 
     const typeMatch = !filters.type || asset.source === filters.type;
-    const dateMatch = (!startDate || assetDate >= startDate) &&
-                      (!endDate || assetDate <= endDate);
+    const dateMatch =
+      (!startDate || assetDate >= startDate) &&
+      (!endDate || assetDate <= endDate);
 
     return typeMatch && dateMatch;
   });
 
-  const totalAmount = filteredIncomes.reduce((sum, income) => sum + income.currentValue, 0);
+  const totalAmount = filteredAssets.reduce((sum, asset) => sum + asset.currentValue, 0);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -88,7 +88,7 @@ export default function ViewAssetsPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <select
           value={filters.type}
-          onChange={(e) => setFilters(prev => ({ ...prev, type: e.target.value }))}
+          onChange={(e) => setFilters((prev) => ({ ...prev, type: e.target.value }))}
           className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">All Sources</option>
@@ -104,7 +104,7 @@ export default function ViewAssetsPage() {
         <input
           type="date"
           value={filters.startDate}
-          onChange={(e) => setFilters(prev => ({ ...prev, startDate: e.target.value }))}
+          onChange={(e) => setFilters((prev) => ({ ...prev, startDate: e.target.value }))}
           className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Start Date"
         />
@@ -112,7 +112,7 @@ export default function ViewAssetsPage() {
         <input
           type="date"
           value={filters.endDate}
-          onChange={(e) => setFilters(prev => ({ ...prev, endDate: e.target.value }))}
+          onChange={(e) => setFilters((prev) => ({ ...prev, endDate: e.target.value }))}
           className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="End Date"
         />
@@ -121,12 +121,12 @@ export default function ViewAssetsPage() {
       {/* Total Amount */}
       <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white shadow-lg mb-8">
         <div className="flex flex-col">
-          <span className="text-sm font-medium opacity-80">Total Income</span>
+          <span className="text-sm font-medium opacity-80">Total Asset Value</span>
           <span className="text-2xl font-bold mt-2">{formatCurrency(totalAmount)}</span>
         </div>
       </div>
 
-      {/* Income Table */}
+      {/* Asset Table */}
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
@@ -142,18 +142,19 @@ export default function ViewAssetsPage() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredIncomes.length > 0 ? (
-                filteredIncomes.map((income) => {
-                  const valueChange = income.currentValue - income.originalValue;
-                  const valueChangePercentage = (valueChange / income.originalValue) * 100;
+              {filteredAssets.length > 0 ? (
+                filteredAssets.map((asset) => {
+                  const valueChange = asset.currentValue - asset.originalValue;
+                  const valueChangePercentage = (valueChange / asset.originalValue) * 100;
+
                   return (
-                    <tr key={income.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{income.name}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatCurrency(income.originalValue)}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatDate(income.date)}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{income.description}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{income.location}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatCurrency(income.currentValue)}</td>
+                    <tr key={asset.id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{asset.name}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatCurrency(asset.originalValue)}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatDate(asset.date)}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{asset.description}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{asset.location}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatCurrency(asset.currentValue)}</td>
                       <td className={`px-6 py-4 whitespace-nowrap text-sm ${valueChange >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                         {formatCurrency(valueChange)} ({valueChangePercentage.toFixed(2)}%)
                       </td>
@@ -163,7 +164,7 @@ export default function ViewAssetsPage() {
               ) : (
                 <tr>
                   <td colSpan={7} className="px-6 py-4 text-center text-sm text-gray-500">
-                    No income found
+                    No assets found
                   </td>
                 </tr>
               )}
