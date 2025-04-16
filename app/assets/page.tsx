@@ -7,7 +7,10 @@ interface Asset {
   value: number;
   date: string;
   type: string;
+  originalValue: number;  // Add this property
+  currentValue: number;   // Add this property
 }
+
 
 export default function AssetsPage() {
   const [assets, setAssets] = useState<Asset[]>([]);
