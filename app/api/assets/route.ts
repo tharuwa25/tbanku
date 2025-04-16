@@ -2,7 +2,15 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
-const ASSETS_FILE = path.join(process.cwd(),'public', 'data','assets.json');
+const ASSETS_FILE = path.join(process.cwd(), 'public', 'data', 'assets.json');
+
+interface Asset {
+  id: number;
+  name: string;
+  value: number;
+  // Add more fields as needed
+  [key: string]: unknown;
+}
 
 function ensureFileExists() {
   const dir = path.dirname(ASSETS_FILE);
@@ -14,35 +22,23 @@ function ensureFileExists() {
   }
 }
 
-
-function readData() {
+function readData(): { assets: Asset[] } {
   ensureFileExists();
   try {
     const fileContent = fs.readFileSync(ASSETS_FILE, 'utf8');
-    let data = JSON.parse(fileContent);
-    // Ensure data has the correct structure
-    if (!data || typeof data !== 'object') {
-      data = { assets: [] };
+    const data = JSON.parse(fileContent);
+    if (!data || typeof data !== 'object' || !Array.isArray(data.assets)) {
+      return { assets: [] };
     }
-    if (!Array.isArray(data.assets)) {
-      data.assets = [];
-    }
-    return data;
-  } catch (error) {
-    // If there's any error reading or parsing the file, return default structure
+    return { assets: data.assets as Asset[] };
+  } catch (err) {
+    console.error('readData Error:', err);
     return { assets: [] };
   }
 }
 
-function writeData(data: any) {
+function writeData(data: { assets: Asset[] }) {
   ensureFileExists();
-  // Ensure data has the correct structure before writing
-  if (!data || typeof data !== 'object') {
-    data = { assets: [] };
-  }
-  if (!Array.isArray(data.assets)) {
-    data.assets = [];
-  }
   fs.writeFileSync(ASSETS_FILE, JSON.stringify(data, null, 2));
 }
 
@@ -50,65 +46,63 @@ export async function GET() {
   try {
     const data = readData();
     return NextResponse.json(data.assets);
-  } catch (error) {
-    console.error('GET Error:', error);
+  } catch (err) {
+    console.error('GET Error:', err);
     return NextResponse.json({ error: 'Failed to read assets data' }, { status: 500 });
   }
 }
 
 export async function POST(request: Request) {
   try {
-    const newAssets = await request.json();
+    const newAsset: Omit<Asset, 'id'> = await request.json();
     const data = readData();
-    
-    const newId = data.assets.length > 0 
-      ? Math.max(...data.assets.map((i: any) => i.id)) + 1 
+
+    const newId = data.assets.length > 0
+      ? Math.max(...data.assets.map((i) => i.id)) + 1
       : 1;
-    
-    const assetsWithId = { ...newAssets, id: newId };
-    data.assets.push(assetsWithId);
-    
+
+    const assetWithId: Asset = { ...newAsset, id: newId };
+    data.assets.push(assetWithId);
+
     writeData(data);
-    return NextResponse.json(assetsWithId);
-  } catch (error) {
-    console.error('POST Error:', error);
+    return NextResponse.json(assetWithId);
+  } catch (err) {
+    console.error('POST Error:', err);
     return NextResponse.json({ error: 'Failed to add assets' }, { status: 500 });
   }
 }
 
 export async function DELETE(request: Request) {
   try {
-    const { id } = await request.json();
+    const { id }: { id: number } = await request.json();
     const data = readData();
-    
-    data.assets = data.assets.filter((i: any) => i.id !== id);
+
+    data.assets = data.assets.filter((i) => i.id !== id);
     writeData(data);
-    
+
     return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('DELETE Error:', error);
+  } catch (err) {
+    console.error('DELETE Error:', err);
     return NextResponse.json({ error: 'Failed to delete assets' }, { status: 500 });
   }
 }
 
 export async function PUT(request: Request) {
   try {
-    const updatedAssets = await request.json();
+    const updatedAsset: Asset = await request.json();
     const data = readData();
-    
-    const index = data.assets.findIndex((i: any) => i.id === updatedAssets.id);
+
+    const index = data.assets.findIndex((i) => i.id === updatedAsset.id);
     if (index === -1) {
-      return NextResponse.json({ error: 'Income not found' }, { status: 404 });
+      return NextResponse.json({ error: 'Asset not found' }, { status: 404 });
     }
-    
-    data.assets[index] = updatedAssets;
+
+    data.assets[index] = updatedAsset;
     writeData(data);
-    
-    return NextResponse.json(updatedAssets);
-  } catch (error) {
-    console.error('PUT Error:', error);
+
+    return NextResponse.json(updatedAsset);
+  } catch (err) {
+    console.error('PUT Error:', err);
     return NextResponse.json({ error: 'Failed to update assets' }, { status: 500 });
   }
-} 
-
-
+}
