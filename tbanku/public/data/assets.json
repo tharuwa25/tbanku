@@ -1,0 +1,22 @@
+{
+  "assets": [
+    {
+      "name": "dsd",
+      "originalValue": 100,
+      "date": "2025-04-04",
+      "description": "32323",
+      "location": "",
+      "currentValue": 150,
+      "id": 4
+    },
+    {
+      "name": "dsd",
+      "originalValue": 200,
+      "date": "2025-04-04",
+      "description": "32323",
+      "location": "",
+      "currentValue": 200,
+      "id": 4
+    }
+  ]
+}

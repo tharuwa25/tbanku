@@ -1,0 +1,18 @@
+{
+  "incomes": [
+    {
+      "amount": 215,
+      "source": "Investment",
+      "date": "2025-04-01",
+      "description": "",
+      "id": 1
+    },
+    {
+      "amount": 100,
+      "source": "Rental",
+      "date": "2025-02-11",
+      "description": "",
+      "id": 2
+    }
+  ]
+}
