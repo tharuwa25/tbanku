@@ -68,6 +68,13 @@ export default function ViewPropertiesPage() {
       </div>
     );
   }
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl font-medium text-red-600">{error}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen p-8">
