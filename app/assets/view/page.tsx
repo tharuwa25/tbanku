@@ -17,15 +17,15 @@ export default function ViewAssetsPage() {
     const loadAssets = async () => {
       try {
         setLoading(true);
-        setError('');
+        setError('');  // Clear previous errors
         const data = await getAllAssets();
         console.log('Fetched assets:', data);
-        setAssets(data);
+        setAssets(data);  // Set fetched assets
       } catch (err) {
         console.error('Error loading assets:', err);
-        setError('Failed to load assets. Please try again later.');
+        setError('Failed to load assets. Please try again later.'); // Set error message
       } finally {
-        setLoading(false);
+        setLoading(false); // Ensure loading state is reset
       }
     };
 

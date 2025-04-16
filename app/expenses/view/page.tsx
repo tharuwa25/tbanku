@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getAllExpenses, getExpensesByDateRange, getExpensesByCategory, Expense } from '@/utils/expenses';
+import { getAllExpenses, Expense } from '@/utils/expenses';
 
 export default function ViewExpensesPage() {
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -14,7 +14,6 @@ export default function ViewExpensesPage() {
   });
 
   useEffect(() => {
-
     const loadExpenses = async () => {
       try {
         setLoading(true);
@@ -64,7 +63,7 @@ export default function ViewExpensesPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl font-medium">Loading incomes...</div>
+        <div className="text-xl font-medium">Loading expenses...</div>
       </div>
     );
   }
@@ -77,29 +76,27 @@ export default function ViewExpensesPage() {
     );
   }
 
-
-
   return (
     <div className="min-h-screen p-8">
       <h1 className="text-3xl font-bold mb-8">View Your Expenses</h1>
 
-       {/* Filters */}
-       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      {/* Filters */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <select
           value={filters.category}
-          onChange={(e) => setFilters(prev => ({ ...prev, source: e.target.value }))}
+          onChange={(e) => setFilters(prev => ({ ...prev, category: e.target.value }))}
           className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          <option value="">All Sources</option>
+          <option value="">All Categories</option>
           <option value="Food">Food</option>
-            <option value="Transportation">Transportation</option>
-            <option value="Housing">Housing</option>
-            <option value="Utilities">Utilities</option>
-            <option value="Entertainment">Entertainment</option>
-            <option value="Healthcare">Healthcare</option>
-            <option value="Education">Education</option>
-            <option value="Shopping">Shopping</option>
-            <option value="Other">Other</option>
+          <option value="Transportation">Transportation</option>
+          <option value="Housing">Housing</option>
+          <option value="Utilities">Utilities</option>
+          <option value="Entertainment">Entertainment</option>
+          <option value="Healthcare">Healthcare</option>
+          <option value="Education">Education</option>
+          <option value="Shopping">Shopping</option>
+          <option value="Other">Other</option>
         </select>
 
         <input
@@ -107,7 +104,6 @@ export default function ViewExpensesPage() {
           value={filters.startDate}
           onChange={(e) => setFilters(prev => ({ ...prev, startDate: e.target.value }))}
           className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Start Date"
         />
 
         <input
@@ -115,19 +111,18 @@ export default function ViewExpensesPage() {
           value={filters.endDate}
           onChange={(e) => setFilters(prev => ({ ...prev, endDate: e.target.value }))}
           className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="End Date"
         />
       </div>
 
       {/* Total Amount */}
       <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white shadow-lg mb-8">
         <div className="flex flex-col">
-          <span className="text-sm font-medium opacity-80">Total Income</span>
+          <span className="text-sm font-medium opacity-80">Total Expenses</span>
           <span className="text-2xl font-bold mt-2">{formatCurrency(totalAmount)}</span>
         </div>
       </div>
 
-      {/* Income Table */}
+      {/* Expense Table */}
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
@@ -168,7 +163,7 @@ export default function ViewExpensesPage() {
               ) : (
                 <tr>
                   <td colSpan={4} className="px-6 py-4 text-center text-sm text-gray-500">
-                    No income found
+                    No expenses found
                   </td>
                 </tr>
               )}
@@ -178,4 +173,4 @@ export default function ViewExpensesPage() {
       </div>
     </div>
   );
-} 
+}
