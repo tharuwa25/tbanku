@@ -6,7 +6,6 @@ export interface Asset {
   date: string;
   description: string;
   location: string;
-  source: string; // Add this line
 }
 
 
