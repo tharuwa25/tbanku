@@ -37,12 +37,13 @@ export default function ViewAssetsPage() {
     const startDate = filters.startDate ? new Date(filters.startDate) : null;
     const endDate = filters.endDate ? new Date(filters.endDate) : null;
 
-    const typeMatch = !filters.type || asset.source === filters.type;
+    //const typeMatch = !filters.type || asset.source === filters.type;
     const dateMatch =
       (!startDate || assetDate >= startDate) &&
       (!endDate || assetDate <= endDate);
 
-    return typeMatch && dateMatch;
+      return dateMatch;
+    //return typeMatch && dateMatch;
   });
 
   const totalAmount = filteredAssets.reduce((sum, asset) => sum + asset.currentValue, 0);
