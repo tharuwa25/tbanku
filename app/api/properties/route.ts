@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import path from 'path';
 import fs from 'fs/promises';
 
+export const dynamic = 'force-dynamic';
+
 const DATA_DIR = path.join(process.cwd(), 'public', 'data');
 const PROPERTIES_FILE = path.join(DATA_DIR, 'properties.json');
 
