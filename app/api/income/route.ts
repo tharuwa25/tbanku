@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
+export const dynamic = 'force-dynamic';
+
 const INCOME_FILE = path.join(process.cwd(), 'public', 'data', 'income.json');
 
 // Define the Income type
