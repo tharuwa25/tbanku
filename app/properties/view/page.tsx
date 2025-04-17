@@ -32,16 +32,16 @@ export default function ViewPropertiesPage() {
     loadProperties();
   }, []);
 
-  const { location: filterLocation, startDate, endDate } = filters;
+  const { location: startDate, endDate } = filters;
 
   const filteredProperties = properties.filter((property) => {
-    const matchesLocation =
-      !filterLocation ||
-      property.location.toLowerCase().includes(filterLocation.toLowerCase());
+    //const matchesLocation =!filterLocation ||
+     // property.location.toLowerCase().includes(filterLocation.toLowerCase());
     const propertyDate = new Date(property.date);
     const matchesStartDate = !startDate || propertyDate >= new Date(startDate);
     const matchesEndDate = !endDate || propertyDate <= new Date(endDate);
-    return matchesLocation && matchesStartDate && matchesEndDate;
+    //return matchesLocation && matchesStartDate && matchesEndDate;
+    return matchesStartDate && matchesEndDate;
   });
 
   const formatCurrency = (amount: number) => {
