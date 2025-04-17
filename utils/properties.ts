@@ -25,7 +25,7 @@ export async function getAllProperty(): Promise<Property[]> {
   }
 }
 
-export async function addProperty(newProperty: Omit<Property, 'id'>): Promise<Property> {
+export async function addProperty(newProperty: Omit<Property, 'id'>) {
   try {
     const response = await fetch(API_BASE_URL, {
       method: 'POST',
