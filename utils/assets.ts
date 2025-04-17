@@ -1,13 +1,14 @@
 export interface Asset {
-  id: number;
-  name:string;
+  id: string;
+  name: string;
   originalValue: number;
+  currentValue: number;
   date: string;
   description: string;
   location: string;
-  currentValue: number;
-
+  source: string; // Add this line
 }
+
 
 const API_BASE_URL = '/api/assets';
 
