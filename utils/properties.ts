@@ -1,10 +1,11 @@
 export interface Property {
-  id: string;
+  id: number;
   name: string;
-  value: number;
+  location: string;
   date: string;
-  usedtime: number;
-  worth: number;
+  value: number;         // Add this
+  usedtime: number;      // Add this if not present
+  worth: number;         // Add this if not present
   description: string;
 }
 
