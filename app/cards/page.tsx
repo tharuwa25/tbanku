@@ -1,6 +1,6 @@
 // pages/cards/index.tsx (or wherever CardsPage is)
 //import Link from 'next/link';
-//import cardData from '../../data/cards.json';
+import cardData from '../../public/data/cards.json';
 
 interface Card {
   id: number;
