@@ -1,7 +1,7 @@
 export interface Property {
   id: number;
   name: string;
-  location: string;
+  //location: string;
   date: string;
   value: number;         // Add this
   usedtime: number;      // Add this if not present
@@ -11,7 +11,7 @@ export interface Property {
 
 const API_BASE_URL = '/api/properties';
 
-export async function getAllProperty(): Promise<Property[]> {
+export async function getAllProperty(): Promise<Property[]> { 
   try {
     const response = await fetch(API_BASE_URL);
     if (!response.ok) {
