@@ -30,21 +30,22 @@ export default function PropertiesPage() {
     loadProperties();
   }, []);
 
-  // Total Properties based on unique `value` amounts
-  const calculateTotalUniqueValues = () => {
-    const uniqueValues = new Set(properties.map(p => p.value));
-    return uniqueValues.size;
-  };
+  // Total Properties based on unique currentValue amounts
+const calculateTotalUniqueValues = () => {
+  const uniqueValues = new Set(properties.map(p => p.currentValue));
+  return uniqueValues.size;
+};
 
-  // Total current value (value field)
-  const calculateTotalPropertyWorth = () => {
-    return properties.reduce((sum, p) => sum + (p.value || 0), 0);
-  };
+// Total current value (currentValue field)
+const calculateTotalPropertyWorth = () => {
+  return properties.reduce((sum, p) => sum + (p.currentValue || 0), 0);
+};
 
-  // Total original worth (worth field)
-  const calculateOriginalPropertyWorth = () => {
-    return properties.reduce((sum, p) => sum + (p.worth || 0), 0);
-  };
+// Total original worth (originalValue field)
+const calculateOriginalPropertyWorth = () => {
+  return properties.reduce((sum, p) => sum + (p.originalValue || 0), 0);
+};
+
 
 
   const formatCurrency = (amount: number) => {
