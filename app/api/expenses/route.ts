@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import path from 'path';
 import fs from 'fs/promises';
 
+// Tell Next.js this route is dynamic
+export const dynamic = 'force-dynamic';
+
 const EXPENSES_FILE = path.join(process.cwd(), 'public', 'data', 'expenses.json');
 
 // Define expense type
