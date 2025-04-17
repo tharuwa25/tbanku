@@ -8,7 +8,7 @@ export default function ViewPropertiesPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [filters, setFilters] = useState({
-    location: '',
+    //location: '',
     startDate: '',
     endDate: ''
   });
@@ -32,7 +32,7 @@ export default function ViewPropertiesPage() {
     loadProperties();
   }, []);
 
-  const { location: startDate, endDate } = filters;
+  const {startDate, endDate } = filters;
 
   const filteredProperties = properties.filter((property) => {
     //const matchesLocation =!filterLocation ||
@@ -87,14 +87,14 @@ export default function ViewPropertiesPage() {
             <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
               Filter by Location
             </label>
-            <input
+            {/* <input
               type="text"
               id="location"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="Enter location"
               value={filters.location}
               onChange={(e) => setFilters({ ...filters, location: e.target.value })}
-            />
+            /> */}
           </div>
           <div>
             <label htmlFor="startDate" className="block text-sm font-medium text-gray-700 mb-1">

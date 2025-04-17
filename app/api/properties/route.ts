@@ -68,7 +68,7 @@ export async function POST(request: Request) {
       typeof name !== 'string' ||
       typeof value !== 'number' ||
       typeof date !== 'string' ||
-      typeof usedtime !== 'number' ||
+      typeof usedtime !== 'number' || 
       typeof worth !== 'number'
     ) {
       return NextResponse.json({ error: 'Missing or invalid required fields' }, { status: 400 });
