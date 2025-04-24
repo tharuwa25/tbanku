@@ -15,46 +15,45 @@ export default function HomePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res1 = await fetch('/data/income.json');
-        const data1 = await res1.json();
+        const [incomeRes, expenseRes, propertyRes, assetRes] = await Promise.all([
+          fetch('http://localhost:5000/api/income'),
+          fetch('http://localhost:5000/api/expenses'),
+          fetch('http://localhost:5000/api/properties'),
+          fetch('http://localhost:5000/api/assets')
+        ]);
   
-        const res2 = await fetch('/data/expenses.json');
-        const data2 = await res2.json();
+        const incomeData = await incomeRes.json();
+        const expenseData = await expenseRes.json();
+        const propertyData = await propertyRes.json();
+        const assetData = await assetRes.json();
   
-        const res3 = await fetch('/data/properties.json');
-        const data3 = await res3.json();
-  
-        const res4 = await fetch('/data/assets.json');
-        const data4 = await res4.json();
-  
-        const totalIncome = data1.incomes.reduce(
+        const totalIncome = incomeData.reduce(
           (acc: number, income: { amount: number }) => acc + income.amount,
           0
         );
   
-        const totalExpenses = data2.expenses.reduce(
+        const totalExpenses = expenseData.expenses.reduce(
           (acc: number, expense: { amount: number }) => acc + expense.amount,
           0
         );
   
-        const totalProperties = data3.properties.reduce(
+        const totalProperties = propertyData.properties.reduce(
           (acc: number, property: { worth: number }) => acc + property.worth,
           0
         );
   
-        const totalAssets = data4.assets.reduce(
+        const totalAssets = assetData.reduce(
           (acc: number, asset: { currentValue: number }) => acc + asset.currentValue,
           0
         );
   
-        setSummary(prev => ({
-          ...prev,
+        setSummary({
           totalIncome,
           totalExpenses,
-          totalProperties,
           totalAssets,
+          totalProperties,
           totalMoney: totalIncome - totalExpenses + totalAssets + totalProperties
-        }));
+        });
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
       }
@@ -62,6 +61,7 @@ export default function HomePage() {
   
     fetchData();
   }, []);
+  
   
 
   const buttons = [

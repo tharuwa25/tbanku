@@ -9,7 +9,7 @@ export interface Property {
   description: string;
 }
 
-const API_BASE_URL = '/api/properties';
+const API_BASE_URL = 'http://localhost:5000/properties';
 
 export async function getAllProperty(): Promise<Property[]> { 
   try {

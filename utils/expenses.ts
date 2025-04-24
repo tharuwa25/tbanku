@@ -8,7 +8,7 @@ export interface Expense {
 
 export async function getAllExpenses(): Promise<Expense[]> {
   try {
-    const response = await fetch('/api/expenses');
+    const response = await fetch('http://localhost:5000/expenses');
     if (!response.ok) {
       throw new Error('Failed to fetch expenses');
     }
@@ -22,7 +22,7 @@ export async function getAllExpenses(): Promise<Expense[]> {
 
 export async function addExpense(expense: Omit<Expense, 'id'>): Promise<Expense | null> {
   try {
-    const response = await fetch('/api/expenses', {
+    const response = await fetch('http://localhost:5000/expenses', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

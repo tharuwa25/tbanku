@@ -9,7 +9,7 @@ export interface Asset {
 }
 
 
-const API_BASE_URL = '/api/assets';
+const API_BASE_URL = 'http://localhost:5000/assets';
 
 
 export async function getAllAssets(): Promise<Asset[]> {

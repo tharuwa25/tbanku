@@ -6,7 +6,7 @@ export interface Income {
   description: string;
 }
 
-const API_BASE_URL = '/api/income';
+const API_BASE_URL = 'http://localhost:5000/income';
 
 export async function getAllIncomes(): Promise<Income[]> {
   try {
