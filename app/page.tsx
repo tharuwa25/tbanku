@@ -16,10 +16,10 @@ export default function HomePage() {
     const fetchData = async () => {
       try {
         const [incomeRes, expenseRes, propertyRes, assetRes] = await Promise.all([
-          fetch('http://localhost:5000/api/income'),
-          fetch('http://localhost:5000/api/expenses'),
-          fetch('http://localhost:5000/api/properties'),
-          fetch('http://localhost:5000/api/assets')
+          fetch('tharuwane.pythonanywhere.com/income'),
+          fetch('tharuwane.pythonanywhere.com/expenses'),
+          fetch('tharuwane.pythonanywhere.com/properties'),
+          fetch('tharuwane.pythonanywhere.com/assets')
         ]);
   
         const incomeData = await incomeRes.json();
