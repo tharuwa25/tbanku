@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getAllIncomes, Income } from '@/utils/income';
+import { getAllIncome, Income } from '@/utils/income';
 
 export default function ViewIncomePage() {
   const [incomes, setIncomes] = useState<Income[]>([]);
@@ -18,7 +18,7 @@ export default function ViewIncomePage() {
       try {
         setLoading(true);
         setError('');
-        const data = await getAllIncomes();
+        const data = await getAllIncome();
         setIncomes(data);
       } catch (error) {
         console.error('Error loading incomes:', error);

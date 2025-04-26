@@ -29,7 +29,8 @@ export default function AddIncomePage() {
       };
 
       await addIncome(newIncome);
-      router.push('/income/view');
+      //router.push('/income/view');
+      console.log(newIncome)
     } catch (err) {
       setError('Failed to add income. Please try again.');
       console.error('Error adding income:', err);

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { getAllIncomes } from '@/utils/income';
+import { getAllIncome } from '@/utils/income';
 
 export default function IncomePage() {
   const [incomeData, setIncomeData] = useState({
@@ -18,7 +18,7 @@ export default function IncomePage() {
       try {
         setLoading(true);
         setError('');
-        const incomes = await getAllIncomes();
+        const incomes = await getAllIncome();
         
         // Calculate total income
         const totalIncome = incomes.reduce((sum, income) => sum + income.amount, 0);
